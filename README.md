@@ -5,7 +5,7 @@ This is repo for main MoonShard Tokensale event.
 # Token description
 Token name - MoonShard
 Token tiker - SHARD
-totalsupply ~= 95 mln
+totalsupply ~= 85 mln
 
 Token distribution:
 1st phase token sale = 10m tokens
@@ -19,8 +19,14 @@ Price on first phase ~ 0.5 USD for token
 Price on second phase ~1 USD for token (for ether) ~1.75 USD (for paypal)
 
 Circulation supply
-~ inital phase = 10 mln tokens (airdrops and other)
-~ after first phase = 25 mln tokens
+~ inital phase = 2,5(?) mln tokens (airdrops and other)
+
+~ after first phase = 10m tokens from sale (5m USD) + (from previouse stage)
+This far we should mention that lower margin of marketcup will be around 12,5 m USD
+If marketcap start move higher than that value - market start to buy next stage from us.
+
+
+
 
 
 # Tokensale Phases
