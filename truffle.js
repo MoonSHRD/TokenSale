@@ -1,18 +1,41 @@
-/*
- * NB: since truffle-hdwallet-provider 0.0.5 you must wrap HDWallet providers in a 
- * function when declaring them. Failure to do so will cause commands to hang. ex:
- * ```
- * mainnet: {
- *     provider: function() { 
- *       return new HDWalletProvider(mnemonic, 'https://mainnet.infura.io/<infura-key>') 
- *     },
- *     network_id: '1',
- *     gas: 4500000,
- *     gasPrice: 10000000000,
- *   },
- */
+
+const {readFileSync} = require('fs')
+require('babel-register')
+require('babel-polyfill')
+var PrivateKeyProvider = require("truffle-privatekey-provider");
+
+
+var privDev
+    = "4B840E1D567A493B9B21308D2C85616C56CD664C97520B041F539EC5F35F62AA"
+
+
 
 module.exports = {
-  // See <http://truffleframework.com/docs/advanced/configuration>
-  // to customize your Truffle configuration!
+
+
+    solc: {
+        optimizer: {
+            enabled: true,
+            runs: 200
+        }
+    },
+
+
+    networks: {
+        test: {
+            host: "localhost",
+            port: 8545,
+            network_id: "5777",
+            peovider : new PrivateKeyProvider(privDev, "http://localhost:8545"),
+            gasPrice: 2000,
+            gas: 2000000,
+        }
+
+    },
+
+    mocha: {
+        useColors: true,
+        // reporter: 'eth-gas-reporter',
+
+    },
 };
