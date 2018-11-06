@@ -19,7 +19,6 @@ contract MoonshrdTokenSaleStage is Ownable {
     uint256 public weiRaised;
 
 
-
     modifier isRuning() {
         require(state == TokenSaleState.Running);
         _;
@@ -43,6 +42,7 @@ contract MoonshrdTokenSaleStage is Ownable {
     );
 
     event UpdaterRoleAssigned(address indexed _address);
+    event NotStartedCrowsdale(uint256 _rate);
 
     function setEtherPrice(uint256 _pennyPerEthAmount) external onlyStuff {
         rate = safeConst.div(_pennyPerEthAmount.mul(getPennyPrice()));
@@ -55,8 +55,12 @@ contract MoonshrdTokenSaleStage is Ownable {
 
     function start() external onlyOwner isWaiting {
         require((state == TokenSaleState.Ready) || (state == TokenSaleState.Paused));
-        require(rate > 0, "Conversion rate is not set");
-        state = TokenSaleState.Running;
+        if(rate>0) {
+            state = TokenSaleState.Running;
+        }
+        else {
+            emit NotStartedCrowsdale(rate);
+        }
     }
 
     function getPennyPrice() internal pure returns (uint256);

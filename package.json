@@ -16,17 +16,18 @@
     "rebuild": "truffle compile"
   },
   "dependencies": {
-    "truffle-core": "^4.0.*",
-    "truffle-assertions": "^0.6.2",
-    "openzeppelin-solidity": "^1.12.*",
     "babel-polyfill": "^6.26.*",
     "babel-register": "^6.26.*",
+    "decimal.js": "^10.0.1",
+    "eth-gas-reporter": "^0.1.12",
+    "openzeppelin-solidity": "^1.12.*",
+    "sol-merger": "^0.1.2",
     "solidity-coverage": "^0.5.4",
     "solium": "^1.1.8",
+    "truffle-assertions": "^0.6.2",
+    "truffle-core": "^4.0.*",
     "web3-utils": "^1.0.0-beta.36",
-    "webpack": "^4.21.0",
-    "eth-gas-reporter": "^0.1.12",
-    "sol-merger": "^0.1.2"
+    "webpack": "^4.21.0"
   },
   "devDependencies": {
     "nyc": "13.1.0",

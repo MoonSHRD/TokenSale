@@ -4,6 +4,7 @@ const assert = require("assert");
 const revert = require('./helpers/assertRevert');
 
 
+
 contract('MainnetPreSale', function (accounts) {
     let Token;
     let Crowdsale;
@@ -20,15 +21,21 @@ contract('MainnetPreSale', function (accounts) {
 
         describe("Owner", () => {
 
-            it("should not be able to start crowdsale, until conversion rate is not set", async () => {
+          /* it("should not be able to start crowdsale, until conversion rate is not set", async () => {
                 try {
                     await Crowdsale.start({from: owner})
                     assert.fail();
                 } catch (err) {
+                    console.log(err.message)
                     assert.ok(/Conversion rate is not set/.test(err.message));
                 }
-            });
+            }); */
 
+            it("should not be able to start crowdsale, until conversion rate is not set", async () => {
+                const started = await Crowdsale.start({from: owner});
+                assert.ok(started.logs[0]['event'] == 'NotStartedCrowsdale');
+            });
+            
 
             it('should grant permissions to updater', async () =>{
                 let tx = await Crowdsale.setUpdater(updater,{from:owner});
@@ -63,8 +70,13 @@ contract('MainnetPreSale', function (accounts) {
     describe('As price updater', function () {
 
         it('should be able to set Rate', async () =>{
-            let tx = await Crowdsale.setEtherPrice(100, {from: updater});
-            assert.strictEqual((await Crowdsale.rate.call()).toDecimal(), 5000);
+            const etherRate = 100;
+            const safeConst = 1000000000000000000;
+            const pennyPrice = 50;
+            await Crowdsale.setEtherPrice(etherRate, {from: updater});
+            const rate = await Crowdsale.rate.call();
+            const newRate = rate.toNumber();
+            assert.strictEqual(newRate, safeConst / (etherRate * pennyPrice));
         });
 
 
