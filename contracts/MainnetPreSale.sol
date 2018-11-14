@@ -12,7 +12,8 @@ import "./MoonShardToken.sol";
 
 contract MainnetPreSale is MoonshrdTokenSaleStage {
     uint8 public pennyPrice = 50;
-    uint256 distributionLimit = 1e6;
+    uint256 tokensCup = 10000000 * (uint256(10) ** 18);
+    uint256 tokensSaled;
 
     constructor(address _wallet, address _updater, MoonShardToken _token) public {
         wallet = _wallet;
@@ -27,9 +28,11 @@ contract MainnetPreSale is MoonshrdTokenSaleStage {
     }
 
     function buyTokens(address _beneficiary, uint _weiAmount) internal {
-        require(_weiAmount != 0, "(weiAmount must be more then 0)");
+        require(_weiAmount != 0, "(weiAmount must be more then 0)");        
         uint256 tokensAmount = _getTokenAmount(_weiAmount);
-        
+       
+        require((tokensSaled.add(tokensAmount)) <= tokensCup, "(was reached the limit of tokens)");  
+        tokensSaled = tokensSaled.add(tokensAmount);    
         weiRaised = weiRaised.add(_weiAmount);
 
         token.mint(_beneficiary, tokensAmount);
@@ -49,6 +52,7 @@ contract MainnetPreSale is MoonshrdTokenSaleStage {
 
     function getPennyPrice() internal pure returns (uint256){
         return 50;
-    }   
+    }
+      
 
 }
