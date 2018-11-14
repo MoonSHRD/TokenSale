@@ -22,11 +22,16 @@ module.exports = {
 
 
     networks: {
+        development: {
+            host: "127.0.0.1",
+            port: 8545,
+            network_id: "*" // match any network
+          },
         test: {
             host: "localhost",
             port: 8545,
             network_id: "5777",
-            peovider : new PrivateKeyProvider(privDev, "http://localhost:8545"),
+            provider : new PrivateKeyProvider(privDev, "http://localhost:8545"),
             gasPrice: 2000,
             gas: 2000000,
         }
