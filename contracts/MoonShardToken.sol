@@ -14,12 +14,13 @@ contract MoonShardToken is StandardToken, Ownable {
     string public name = "MoonShard";
     uint8 public decimals = 18;
     string public symbol = "SHARD";
+    uint256 constant maxSupply = 90000000 * (uint256(10) ** 18); 
 
-    function mint(address _to, uint _val) external onlyOwner {
+    function mint(address _to, uint256 _val) external onlyOwner {
         require(_val > 0);
+        require((totalSupply_.add(_val)) <= maxSupply, "(was reached the limit of max tokenSpply)");
         totalSupply_ = totalSupply_.add(_val);
-//        require(totalSupply_ <= maxSupply);
-        balances[_to] += _val;
+        balances[_to] = balances[_to].add(_val);
 
         emit Transfer(0x0, _to, _val);
     }

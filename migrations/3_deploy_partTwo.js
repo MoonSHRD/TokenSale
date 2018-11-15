@@ -6,19 +6,6 @@ module.exports = function (deployer, network, accounts) {
     let wallet;
     let updater;
 
-    switch (network) {
-        case 'test':
-            wallet = accounts[1];
-            updater = accounts[2];
-            break;
-        default:
-            wallet = accounts[1];
-            updater = accounts[2];
-            break;
-    }
-
-    deployer.deploy(MainnetPreSalePartTwo, wallet, updater)
+    deployer.deploy(MainnetPreSalePartTwo)
         .then(MainnetPreSalePartTwo.deployed)
-      
-
 };

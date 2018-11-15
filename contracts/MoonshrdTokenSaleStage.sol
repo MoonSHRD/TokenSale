@@ -20,7 +20,7 @@ contract MoonshrdTokenSaleStage is Ownable {
     address public wallet;
     uint256 public rate;
     uint256 public weiRaised;
-    uint256 public cooldown = 1 seconds;
+    uint256 public cooldown = 0;
     uint256 public lastTimeRateUpdate;
 
     modifier isRuning() {
@@ -63,11 +63,12 @@ contract MoonshrdTokenSaleStage is Ownable {
     }
 
     function start() external onlyOwner isWaiting {
+        require(token != address(0), "(token was not set)");
         require(rate > 0, "(conversion rate is not set)");      
         state = TokenSaleState.Running;
     }
 
-    function pause() external onlyOwner isRuning {
+    function pause() external onlyOwner {
         state = TokenSaleState.Paused;
     }
     function finish(address _to) external onlyOwner {

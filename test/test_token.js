@@ -21,7 +21,7 @@ contract('MoonShardToken', function (accounts) {
 
         describe("Token", () => {
 
-            it("should mint tokens to account and change TotalSupply", async () => {
+            it('should mint tokens to account and change TotalSupply', async () => {
                 await Token.mint(wallet, 100000, {from: owner});
 
                 const totalSupply = await Token.totalSupply();
@@ -29,6 +29,11 @@ contract('MoonShardToken', function (accounts) {
 
                 assert.equal(totalSupply, 100000, "totalSupply was not changed");
                 assert.equal(tokenBalance, 100000, "tokens were not received by the wallet");                
-            });            
+            });
+
+            it('should revert transaction when maxSupply of tokens was reached', async () => {
+                await truffleAssert.fails(Token.mint(wallet, 90000000 * (10 ** 18), {from: owner}),
+                `VM Exception while processing transaction: revert (was reached the limit of max tokenSpply)`)
+            })
         });        
 });

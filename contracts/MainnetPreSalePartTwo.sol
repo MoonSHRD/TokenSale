@@ -14,12 +14,8 @@ contract MainnetPreSalePartTwo is MoonshrdTokenSaleStage {
     uint8 public pennyPrice = 100;
     uint256 distributionLimit = 1e6;
 
-    constructor(address _wallet, address _updater, MoonShardToken _token) public {
-        wallet = _wallet;
-        token = _token;
-        state = TokenSaleState.Ready;
+    constructor() public {
         owner = msg.sender;
-        updater = _updater;
     }
 
     function() external payable {
@@ -50,8 +46,9 @@ contract MainnetPreSalePartTwo is MoonshrdTokenSaleStage {
     function getPennyPrice() internal pure returns (uint256){
         return 100;
     }
-    function getTokenOwner() external view returns (address) {
-        return token.owner();
-    }     
-
+    function setToken(MoonShardToken _token) external onlyOwner {
+        require(_token != address(0), "(its not token address)");
+        token = _token;
+        state = TokenSaleState.Ready;
+    }   
 }

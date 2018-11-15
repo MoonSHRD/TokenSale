@@ -15,12 +15,10 @@ contract MainnetPreSale is MoonshrdTokenSaleStage {
     uint256 tokensCup = 10000000 * (uint256(10) ** 18);
     uint256 tokensSaled;
 
-    constructor(address _wallet, address _updater, MoonShardToken _token) public {
-        wallet = _wallet;
+    constructor(MoonShardToken _token) public {
         token = _token;
         state = TokenSaleState.Ready;
         owner = msg.sender;
-        updater = _updater;
     }
 
     function() external payable {
