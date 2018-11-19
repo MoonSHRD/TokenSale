@@ -8,7 +8,6 @@ const assertRevert = require('./helpers/assertRevert');
 const truffleAssert = require('truffle-assertions');
 
 
-
 contract('MainnetPreSale', function (accounts) {
     let Token;
     let TokenTwo;
@@ -17,6 +16,7 @@ contract('MainnetPreSale', function (accounts) {
     let owner = accounts[0];
     let updater = accounts[2];
     let wallet = accounts[1];
+    let revert = 'VM Exception while processing transaction: revert';
 
 
     before(async function () {
@@ -30,8 +30,7 @@ contract('MainnetPreSale', function (accounts) {
 
         it('should not be able to start crowdsale, until conversion rate is not set', async () => {
             await truffleAssert.fails(Crowdsale.start(
-                                        {from: owner}), 
-                                        `VM Exception while processing transaction: revert (conversion rate is not set)`);                
+                                        {from: owner}), revert);                
         });
         
 
@@ -46,7 +45,7 @@ contract('MainnetPreSale', function (accounts) {
         })
 
         it('should be able to start crowdsale', async () => {
-            await Crowdsale.setEtherPrice(1, {from: updater});
+            await Crowdsale.setEtherPrice(10000, {from: updater});
             await Crowdsale.start({from: owner});
             assert.equal((await Crowdsale.state.call()), 1, "crowdsale was not started");
         })
@@ -56,10 +55,11 @@ contract('MainnetPreSale', function (accounts) {
     describe('Price updater', function () {
 
         it('should be able to set Rate', async () =>{
-            const etherRate = 100;
+            const etherRate = 10000;
             await Crowdsale.setEtherPrice(etherRate, {from: updater});
             const rate = await Crowdsale.rate.call();
-            assert.strictEqual(rate.toNumber(), 200000000000000, "rate was not set");
+            //console.log(rate.toNumber())
+            assert.strictEqual(rate.toNumber(), 200, "rate was not set");
         });
 
         it('should be able to set cooldown of rate updating', async () => {
@@ -81,14 +81,13 @@ contract('MainnetPreSale', function (accounts) {
            const walletTokensAfter = await Token.balanceOf(wallet);
            const contractBalanceAfter = await web3.eth.getBalance(Crowdsale.address);
 
-           assert.equal(walletTokensAfter, 20000000000000000000,'tokens were not received by the wallet');
+           assert.equal(walletTokensAfter, 20000000,'tokens were not received by the wallet');
            assert.equal(contractBalanceAfter, 100000,'weiAmount was not received by contract');
         });
 
         it('should revert transaction when msg.value equal 0', async () => {
            await truffleAssert.fails(Crowdsale.sendTransaction(
-                                    {from: wallet, to: Crowdsale.address, value: 0}),
-                                    `VM Exception while processing transaction: revert (weiAmount must be more then 0)`);           
+                                    {from: wallet, to: Crowdsale.address, value: 0}), revert);           
         })    
     })
 
@@ -96,8 +95,7 @@ contract('MainnetPreSale', function (accounts) {
 
         it('should revert transaction when was reached cup of tokens', async () => {
             await truffleAssert.fails(Crowdsale.sendTransaction(
-                                    {from: wallet, to: Crowdsale.address, value: 10000000 * (10 ** 18)}),
-                                    `VM Exception while processing transaction: revert (was reached the limit of tokens)`);
+                                    {from: wallet, to: Crowdsale.address, value: 50000 * (10 ** 18)}), revert);
             
         })
 
@@ -114,7 +112,5 @@ contract('MainnetPreSale', function (accounts) {
             await CrowdsalePartTwo.setToken((await Token.address));
             assert.equal((await CrowdsalePartTwo.token.call()), (await Token.address), "token was not set");
         })
-
-
     })
 });

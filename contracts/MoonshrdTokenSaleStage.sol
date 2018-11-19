@@ -1,12 +1,14 @@
 pragma solidity ^0.4.24;
 
+import "openzeppelin-solidity/contracts/ReentrancyGuard.sol";
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
-import "./MoonShardToken.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "./MainnetPreSale.sol";
+import "./MoonShardToken.sol";
 
 
-contract MoonshrdTokenSaleStage is Ownable {
+
+
+contract MoonshrdTokenSaleStage is Ownable, ReentrancyGuard {
     using SafeMath for uint256;
     uint256 safeConst = 1000000000000000000;
  
@@ -49,7 +51,7 @@ contract MoonshrdTokenSaleStage is Ownable {
 
     function setEtherPrice(uint256 _pennyPerEthAmount) external onlyStuff {
         require(block.timestamp >= (lastTimeRateUpdate + cooldown), "(cooldown since the last update has not yet expired)");
-        rate = safeConst.div(_pennyPerEthAmount.mul(getPennyPrice()));
+        rate = safeConst.div((safeConst.mul(getPennyPrice())).div(_pennyPerEthAmount));
         lastTimeRateUpdate = block.timestamp;
     }
 
@@ -77,5 +79,11 @@ contract MoonshrdTokenSaleStage is Ownable {
     }
    
     function getPennyPrice() internal pure returns (uint256);
+
+    function isContract(address account) internal view returns (bool) {
+        uint256 size;    
+        assembly { size := extcodesize(account) }
+        return size > 0;
+    }
 
 }

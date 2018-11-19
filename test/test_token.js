@@ -12,10 +12,11 @@ contract('MoonShardToken', function (accounts) {
     let Token;
     let owner = accounts[0];
     let wallet = accounts[1];
+    let revert = 'VM Exception while processing transaction: revert';
 
 
     before(async function () {
-        Token = await MoonShardToken.new();
+        Token = await MoonShardToken.new();       
     });
 
 
@@ -32,8 +33,7 @@ contract('MoonShardToken', function (accounts) {
             });
 
             it('should revert transaction when maxSupply of tokens was reached', async () => {
-                await truffleAssert.fails(Token.mint(wallet, 90000000 * (10 ** 18), {from: owner}),
-                `VM Exception while processing transaction: revert (was reached the limit of max tokenSpply)`)
+                await truffleAssert.fails(Token.mint(wallet, 90000000 * (10 ** 18), {from: owner}), revert)
             })
         });        
 });

@@ -21,11 +21,12 @@ contract MainnetPreSale is MoonshrdTokenSaleStage {
         owner = msg.sender;
     }
 
-    function() external payable {
+    function() external nonReentrant payable {
         buyTokens(msg.sender, msg.value);
     }
 
     function buyTokens(address _beneficiary, uint _weiAmount) internal {
+        isContract(_beneficiary);
         require(_weiAmount != 0, "(weiAmount must be more then 0)");        
         uint256 tokensAmount = _getTokenAmount(_weiAmount);
        
