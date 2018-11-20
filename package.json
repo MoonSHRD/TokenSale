@@ -1,0 +1,52 @@
+{
+  "name": "moonshard_ico",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "truffle": "truffle",
+    "deploy:reset": "truffle deploy --reset --network test",
+    "deploy": "truffle deploy --network test",
+    "test": "truffle test --network loom_dapp_chain",
+    "build-contracts": "sol-merger \"./contracts/*.sol\" ./build/",
+    "clean": "rm build/contracts/*",
+    "rebuild": "truffle compile"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.*",
+    "babel-register": "^6.26.*",
+    "decimal.js": "^10.0.1",
+    "eth-gas-reporter": "^0.1.12",
+    "openzeppelin-solidity": "^1.12.0",
+    "sol-merger": "^0.1.2",
+    "solidity-coverage": "^0.5.4",
+    "solium": "^1.1.8",
+    "truffle-assertions": "^0.6.2",
+    "truffle-core": "^4.0.*",
+    "web3-utils": "^1.0.0-beta.36",
+    "webpack": "^4.21.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-bignumber": "^2.0.2",
+    "coveralls": "^3.0.1",
+    "dotenv": "^4.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eth-gas-reporter": "^0.1.12",
+    "ethjs-abi": "^0.2.1",
+    "ganache-cli": "6.1.0",
+    "nyc": "13.1.0",
+    "solc-cli": "^0.3.0",
+    "solidity-coverage": "^0.5.11",
+    "solium": "^1.1.8",
+    "truffle-privatekey-provider": "0.1.0"
+  }
+}

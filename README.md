@@ -1,3 +1,6 @@
+
+
+
 # Tokensale
 
 This is repo for main MoonShard Tokensale event.
@@ -10,8 +13,11 @@ totalsupply ~= 90 mln
 Token distribution:
 1st phase token sale = 10m tokens
 2nd phase token sale = 25m + 25m (for ether and usd)
+
+
 cashback progr = 10m tokens (not confirmed)
 top-100 bloggers referal program = 5m tokens
+
 crew fee = 10m tokens (freezed on 1 year)
 airdrops and other campaigns = 5m tokens
 
